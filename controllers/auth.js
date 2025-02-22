@@ -19,10 +19,11 @@ const login = async (req, res, next) => {
       return next(err);
     }
     const location = await getUserLocation(req.clientIp);
+    let _location = `${location.city}-${location.region}-${location.latitude}-${location.longitude}`;
 
     await User.query().update(
       {
-        location: `${location.city}-${location.region}-${location.latitude}-${location.longitude}`,
+        location: _location,
       },
       { email_address: email_address }
     );
@@ -35,7 +36,7 @@ const login = async (req, res, next) => {
       message: "User logged in successfully",
       data: {
         token,
-        location: location,
+        location: _location,
       },
     });
   } catch (error) {
