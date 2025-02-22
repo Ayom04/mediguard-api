@@ -18,15 +18,15 @@ const login = async (req, res, next) => {
       err.status = 401;
       return next(err);
     }
-    const location = await getUserLocation(req.clientIp);
-    let _location = `${location.city}-${location.region}-${location.latitude}-${location.longitude}`;
+    // const location = await getUserLocation(req.clientIp);
+    // let _location = `${location.city}-${location.region}-${location.latitude}-${location.longitude}`;
 
-    await User.query().update(
-      {
-        location: _location,
-      },
-      { email_address: email_address }
-    );
+    // await User.query().update(
+    //   {
+    //     location: _location,
+    //   },
+    //   { email_address: email_address }
+    // );
 
     const token = await generateToken({ email: user.email });
     res.setHeader("Authorization", `Bearer ${token}`);
@@ -36,7 +36,7 @@ const login = async (req, res, next) => {
       message: "User logged in successfully",
       data: {
         token,
-        location: _location,
+        // location: _location,
       },
     });
   } catch (error) {
