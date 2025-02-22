@@ -28,6 +28,11 @@ const login = async (req, res, next) => {
     //   { email_address: email_address }
     // );
 
+    delete user.password_hash;
+    delete user.password_salt;
+    delete user.created_at;
+    delete user.updated_at;
+    delete user.user_id;
     const token = await generateToken({ email: user.email });
     res.setHeader("Authorization", `Bearer ${token}`);
 
@@ -36,7 +41,7 @@ const login = async (req, res, next) => {
       message: "User logged in successfully",
       data: {
         token,
-        // location: _location,
+        user: user,
       },
     });
   } catch (error) {
