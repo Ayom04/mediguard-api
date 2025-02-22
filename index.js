@@ -1,6 +1,5 @@
 require("dotenv").config();
 const express = require("express");
-
 const app = express();
 const PORT = process.env.APP_PORT || 3000;
 const cors = require("cors");
@@ -8,10 +7,8 @@ const Knex = require("knex");
 const { Model } = require("objection");
 displayRoutes = require("express-routemap");
 const knexConfig = require("./config/database");
-
 const knex = Knex(knexConfig[process.env.NODE_ENV || "development"]);
 
-app.use(express.json());
 const corsOptions = {
   origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
@@ -25,6 +22,7 @@ const corsOptions = {
 
 // Apply CORS middleware
 app.use(cors(corsOptions));
+app.use(express.json());
 
 // Handle preflight requests explicitly
 app.options("*", cors(corsOptions));

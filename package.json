@@ -6,9 +6,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "migrate": "npx knex migrate:latest --knexfile ./config/database.js",
+    "migrate:dev": "dotenv -e .env -- knex migrate:latest --env development",
+    "migrate:prod": "dotenv -e .env -- knex migrate:latest --env production",
     "up": " npx knex migrate:up 20231026_subscriptions.js --knexfile ./src/config/database.js",
-    "undo-migrate": "npx knex migrate:rollback --all --knexfile ./src/config/database.js"
+    "undo-migrate:dev": "dotenv -e .env -- knex migrate:rollback --all --knexfile ./config/database.js",
+    "undo-migrate:prod": "dotenv -e .env -- knex migrate:rollback --all --knexfile ./config/database.js --env production"
   },
   "keywords": [],
   "author": "",

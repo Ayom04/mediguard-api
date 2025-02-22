@@ -33,7 +33,7 @@ const login = async (req, res, next) => {
     delete user.created_at;
     delete user.updated_at;
     delete user.user_id;
-    const token = await generateToken({ email: user.email });
+    const token = await generateToken({ email_address: user.email_address });
     res.setHeader("Authorization", `Bearer ${token}`);
 
     return res.status(200).json({

@@ -2,15 +2,15 @@ require("dotenv").config();
 
 module.exports = {
   development: {
-    client: "mysql",
+    client: "mysql2",
     connection: {
-      host: process.env.DATABASE_HOST || "localhost",
-      port: process.env.DATABASE_PORT,
-      user: process.env.DATABASE_USER,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
-      timezone: "Z",
+      host: process.env.DATABASE_HOST || "127.0.0.1",
+      port: process.env.DATABASE_PORT || 8889,
+      user: process.env.DATABASE_USER || "root",
+      password: process.env.DATABASE_PASSWORD || "root",
+      database: process.env.DATABASE_NAME || "nova",
       charset: "utf8",
+      timezone: "Z",
     },
     debug: true,
     logging: true,
@@ -44,5 +44,9 @@ module.exports = {
     },
     logging: true,
     pool: { min: 0, max: 7 },
+    migrations: {
+      directory: "../migrations",
+      tableName: "knex_migrations",
+    },
   },
 };

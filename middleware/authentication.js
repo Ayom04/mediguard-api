@@ -1,12 +1,11 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const { unauthorisedAccess } = require("../constants/messages");
 
-const authorization = async (req, res, next) => {
+const Authentication = async (req, res, next) => {
   const { authorization } = req.headers;
   try {
     if (!authorization) {
-      const err = new Error(unauthorisedAccess);
+      const err = new Error("Unauthorized access");
       err.status = 401;
       return next(err);
     }
@@ -16,10 +15,11 @@ const authorization = async (req, res, next) => {
       process.env.JWT_SECRET || "secret123",
       async (err, decoded) => {
         if (err) {
-          const err = new Error(unauthorisedAccess);
+          const err = new Error("Unauthorized access");
           err.status = 401;
           return next(err);
         }
+        console.log(decoded);
 
         req.params.email_address = decoded.email_address;
 
@@ -27,8 +27,9 @@ const authorization = async (req, res, next) => {
       }
     );
   } catch (error) {
+    console.error(error);
     next(error);
   }
 };
 
-module.exports = authorization;
+module.exports = Authentication;
