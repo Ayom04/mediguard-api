@@ -12,11 +12,22 @@ const knexConfig = require("./config/database");
 const knex = Knex(knexConfig[process.env.NODE_ENV || "development"]);
 
 app.use(express.json());
-app.use(
-  cors({
-    exposedHeaders: ["Authorization"],
-  })
-);
+const corsOptions = {
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  exposedHeaders: ["Authorization"],
+  credentials: true,
+  maxAge: 86400, // 24 hours
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+};
+
+// Apply CORS middleware
+app.use(cors(corsOptions));
+
+// Handle preflight requests explicitly
+app.options("*", cors(corsOptions));
 app.use((req, res, next) => {
   req.clientIp =
     req.headers["x-forwarded-for"] ||
