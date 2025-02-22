@@ -35,6 +35,7 @@ const login = async (req, res, next) => {
       message: "User logged in successfully",
       data: {
         token,
+        location: location,
       },
     });
   } catch (error) {

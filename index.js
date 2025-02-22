@@ -8,6 +8,7 @@ const Knex = require("knex");
 const { Model } = require("objection");
 displayRoutes = require("express-routemap");
 const knexConfig = require("./config/database");
+
 const knex = Knex(knexConfig[process.env.NODE_ENV || "development"]);
 
 app.use(express.json());

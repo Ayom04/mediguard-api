@@ -13,7 +13,7 @@ const registerSchema = Joi.object({
       "string.email": "Email is not valid",
       "any.required": "Email is required",
     }),
-  phone_number: Joi.string().messages({
+  phone_number: Joi.string().required().messages({
     "string.empty": "Phone number is required",
     "any.required": "Phone number is required",
   }),
