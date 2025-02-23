@@ -1,5 +1,6 @@
 const MedicationRemainder = require("../models/medication_remainder");
 const { v4: uuidv4 } = require("uuid");
+const { readFileAndSendEmail } = require("../services/email");
 
 const addMedicationRemainder = async (req, res, next) => {
   const { user_id } = req.params;
@@ -57,7 +58,8 @@ const getMedicationReminders = async (req, res, next) => {
         "medication_time",
         "repeat_interval",
         "medication_date",
-        "schedule"
+        "schedule",
+        "last_sent"
       );
     return res.status(200).json({
       status: "success",
@@ -71,7 +73,55 @@ const getMedicationReminders = async (req, res, next) => {
   }
 };
 
+const sendReminder = async (req, res, next) => {
+  try {
+    const reminders = await MedicationRemainder.query()
+      .modify("pendingReminders")
+      .withGraphFetched("user");
+
+    reminders.forEach(async (reminder) => {
+      console.log(reminder.user);
+      // Send reminder to user
+      await readFileAndSendEmail(
+        reminder.user.email_address,
+        `Reminder: ${reminder.medication_name}`,
+        {
+          name: reminder.user.name,
+          drugs: reminder.medication_name,
+          dosage: reminder.medication_dose,
+        },
+        "reminder"
+      );
+
+      console.log(reminder.medication_remainder_id);
+      // Update last_sent field
+      await MedicationRemainder.query()
+        .findById(reminder.medication_remainder_id)
+        .patch({
+          last_sent: `${new Date().toISOString().split("T")[0]} ${new Date()
+            .getHours()
+            .toString()
+            .padStart(2, "0")}:${new Date()
+            .getMinutes()
+            .toString()
+            .padStart(2, "0")}`,
+        });
+    });
+
+    res.status(200).json({
+      status: "success",
+      message: "Reminders sent successfully",
+      data: {
+        reminders,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 module.exports = {
   addMedicationRemainder,
   getMedicationReminders,
+
+  sendReminder,
 };

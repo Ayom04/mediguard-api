@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   addMedicationRemainder,
   getMedicationReminders,
+  sendReminder,
 } = require("../controllers/medication_remainder");
 const Authentication = require("../middleware/authentication");
 const Authorization = require("../middleware/authorization");
@@ -17,6 +18,9 @@ router.post(
   addMedicationRemainder
 );
 
+// router.get("/pending", Authentication, Authorization, );
+
 router.get("/", Authentication, Authorization, getMedicationReminders);
+router.get("/omo", sendReminder);
 
 module.exports = router;

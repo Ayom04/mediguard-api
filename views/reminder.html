@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Medication Reminder</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        padding: 20px;
+        text-align: center;
+      }
+      .container {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin: auto;
+      }
+      h2 {
+        color: #4caf50;
+      }
+      p {
+        font-size: 16px;
+        color: #555;
+      }
+      .drug-list {
+        background: #f9f9f9;
+        padding: 10px;
+        border-radius: 5px;
+        text-align: left;
+        display: inline-block;
+        width: 100%;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #4caf50;
+        color: white;
+      }
+      .footer {
+        font-size: 12px;
+        color: #777;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Medication Reminder</h2>
+      <p>Hello <strong>{{name}}</strong>,</p>
+      <p>This is a friendly reminder to take your medication as scheduled.</p>
+
+      <p><strong>Your prescribed medications:</strong></p>
+      <div class="drug-list">
+        <table>
+          <thead>
+            <tr>
+              <th>{{drugs}}</th>
+              <th>{{dosage}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            medications
+          </tbody>
+        </table>
+      </div>
+
+      <p>Please follow your doctor’s instructions carefully.</p>
+      <p>Stay healthy! 💙</p>
+
+      <div class="footer">
+        <p>This is an automated message. Please do not reply.</p>
+      </div>
+    </div>
+  </body>
+</html>

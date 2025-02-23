@@ -5,6 +5,9 @@ class MedicationRemainder extends Model {
   static get tableName() {
     return "medication_remainders";
   }
+  static get idColumn() {
+    return "medication_remainder_id";
+  }
   static get relationMappings() {
     const User = require("./user");
     return {
@@ -29,6 +32,16 @@ class MedicationRemainder extends Model {
   user_id;
   created_at;
   updated_at;
+
+  static get modifiers() {
+    return {
+      pendingReminders(builder) {
+        builder.whereRaw(
+          "last_sent IS NULL OR TIMESTAMPDIFF(HOUR, last_sent, NOW()) >= repeat_interval"
+        );
+      },
+    };
+  }
 
   $beforeInsert() {
     const now = moment.tz("Africa/Lagos").format("YYYY-MM-DD HH:mm:ss");
