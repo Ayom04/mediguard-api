@@ -19,7 +19,6 @@ const Authentication = async (req, res, next) => {
           err.status = 401;
           return next(err);
         }
-        console.log(decoded);
 
         req.params.email_address = decoded.email_address;
 

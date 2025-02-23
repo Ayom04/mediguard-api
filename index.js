@@ -46,6 +46,10 @@ app.get("/", (req, res) => {
 app.use("/api/v1/auth", require("./routes/auth.js"));
 app.use("/api/v1/users", require("./routes/user"));
 app.use("/api/v1/symptomchecker", require("./routes/symptomchecker"));
+app.use(
+  "/api/v1/medication-remainder",
+  require("./routes/medication_remainder")
+);
 
 app.use((err, req, res, next) => {
   return res.status(err.code || 400).json({

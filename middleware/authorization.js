@@ -3,9 +3,8 @@ const User = require("../models/user");
 const Authorization = async (req, res, next) => {
   const { email_address } = req.params;
   try {
-    console.log(email_address);
     if (!email_address) throw new Error("Unauthorized access");
-    console.log("Authentication middleware");
+
     const user = await User.query().findOne({ email_address });
     if (!user) {
       const err = new Error("Unauthorized access");
