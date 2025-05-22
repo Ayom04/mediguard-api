@@ -126,15 +126,10 @@ const sendReminder = async () => {
 };
 
 // Schedule reminder emails every minute
-cron.schedule("* * * *  * *", () => {
+cron.schedule("1 * * * *", () => {
   console.log("Sending reminder");
   sendReminder();
 });
-
-// Schedule reminder emails every hour
-// cron.schedule("0 * * * *", () => {
-//   sendReminder();
-// });
 
 module.exports = {
   addMedicationRemainder,
